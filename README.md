@@ -39,14 +39,16 @@ Prepare input file, Input file should be of the format
 
 #### Step 02: Execute the script
 Execute the script by running the command  
-`./drop-ksqldb-objects.sh sed localhost:8088 /input/DEMO_DROP_KSQL_OBJECT.txt`
+`./drop-ksqldb-objects.sh sed localhost:8088 /ksqldb-utilities/drop-ksqldb-objects/demo/DEMO_DROP_KSQL_OBJECT.dat`
 
  - `sed` is hardcoded value for now, in future this will be enhanced to use jq also
  - `localhost:8088` is the rest endpoint for your ksqlDB server
- - `/input/DEMO_DROP_KSQL_OBJECT.txt` is the path for the input file which was prepared in step 01.
+ - `ksqldb-utilities/drop-ksqldb-objects/demo/DEMO_DROP_KSQL_OBJECT.dat` is the path for the input file which was prepared in step 01.
 
 #### Step 03: Validating the results
 Script execution will generate a html report in `reports` sub directory of this script. This script will have information about the execution output.
+
+![image info](./drop-ksqldb-objects/demo/drop-ksqldb-objects.jpg)
 
 ## Build KSQL Queries
   
@@ -71,13 +73,13 @@ dev:
 
 #### Step 02: Prepare input file
 Prepare input file (for example sample.dat) with list of sqls which should run thru build process during this execution. Input file should be in below format.
-`/path-to-source-sql-file/sample-sql.sql`
+`/ksqldb-utilities/build-ksqldb-query/demo/demo.sql`
 
 > Remember the contents inside the input file should be of `.sql` extension only and is case sensitive.
 
 #### Step 03: Execute the script
 Execute the script by running the command  
-`./build-ksqldb-query.sh dev /path-to-control-file/sample.dat`
+`./build-ksqldb-query.sh dev /ksqldb-utilities/build-ksqldb-query/demo/demo.dat`
 
 > Here `dev` is the target environment
 
@@ -118,3 +120,5 @@ Execute the script by running the command
 
 #### Step 04: Validating the results
 Script execution will generate a html report in `reports` sub directory of this script. This script will have information about the execution output.
+
+![image info](./build-ksqldb-query/demo/deploy-ksql-query.jpg)

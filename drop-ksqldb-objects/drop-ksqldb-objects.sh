@@ -216,7 +216,9 @@ if [[ -n $stream_table_names ]]; then
   # Do not drop if terminate_only_flag flag is set
     if [[ $terminate_only_flag = 'y' ]] || [[ $terminate_only_flag = 'yes' ]] ; then
       echo "INFO                  : $stream_table_name SKIPPED" >>$LOGFILE
-      echo "<td>Skipped</td>" >> $REPORTSFILE
+      echo "<td>Table/Stream</td>" >> $REPORTSFILE
+      echo "<td>$stream_table_name</td>" >> $REPORTSFILE
+      echo "<td>Terminate Only</td>" >> $REPORTSFILE
     else
     #Command to drop the table\stream
     drop_command=$(echo "curl -s -X "\""POST"\"" $KSQL_URL/ksql \
@@ -233,7 +235,7 @@ if [[ -n $stream_table_names ]]; then
     drop_command_output=$(eval $drop_command)
     echo $drop_command_output >> $LOGFILE
   
-    echo "<td>Table</td>" >> $REPORTSFILE
+    echo "<td>Table/Stream</td>" >> $REPORTSFILE
     echo "<td>$stream_table_name</td>" >> $REPORTSFILE
   
     # Enhance the error handling to capture the message from curl
