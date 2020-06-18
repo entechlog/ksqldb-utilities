@@ -1,0 +1,10 @@
+#LAB TO DEV CONFIGURATION
+dev:
+  object:
+    # Object Name(TABLE/STREAM) configuration
+    before: ' LAB_'
+    after: ' DEV_'
+  topic:
+    # Topic Name Configuration
+    before: 'lab.'
+    after: 'dev.'
