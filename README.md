@@ -39,7 +39,7 @@ Prepare input file, Input file should be of the format
 
 #### Step 02: Execute the script
 Execute the script by running the command  
-`./dropKsqlDBObjects.sh sed localhost:8088 /input/DEMO_DROP_KSQL_OBJECT.txt`
+`./drop-ksqldb-objects.sh sed localhost:8088 /input/DEMO_DROP_KSQL_OBJECT.txt`
 
  - `sed` is hardcoded value for now, in future this will be enhanced to use jq also
  - `localhost:8088` is the rest endpoint for your ksqlDB server
@@ -56,7 +56,7 @@ This scripts runs a process to change the sql object names from one environment 
 ### How to execute this script
 
 #### Step 01: Prepare control yaml
-Prepare yaml file with an entry for each target environment. YAML file `buildKsqlQuery.yaml` should be placed in `input` sub directory of this script  and the contents should be in below format
+Prepare yaml file with an entry for each target environment. YAML file `build-ksqldb-query.yaml` should be placed in `input` sub directory of this script  and the contents should be in below format
 ```
 dev:
   object:
@@ -77,7 +77,7 @@ Prepare input file (for example sample.dat) with list of sqls which should run t
 
 #### Step 03: Execute the script
 Execute the script by running the command  
-`./buildKsqlQuery.sh dev /path-to-control-file/sample.dat`
+`./build-ksqldb-query.sh dev /path-to-control-file/sample.dat`
 
 > Here `dev` is the target environment
 
@@ -92,7 +92,7 @@ This scripts runs a process to deploy the ksql queries.
 ### How to execute this script
 
 #### Step 01: Prepare control yaml
-Prepare yaml file with an entry for each target environment. YAML file `deployKsqlQuery.yaml` should be placed in `input` sub directory of this script  and the contents should be in below format
+Prepare yaml file with an entry for each target environment. YAML file `deploy-ksql-query.yaml` should be placed in `input` sub directory of this script  and the contents should be in below format
 ```
 lab:
   ksql_url: hostname-01:8088
@@ -103,14 +103,14 @@ dev:
 ```
 
 #### Step 02: Prepare input file
-Prepare input file (for example sample.dat) with list of sqls which should run thru deployment process during this execution. Input file should be in below format. Typically this is just the output from the `buildKsqlQuery.sh` script.
+Prepare input file (for example sample.dat) with list of sqls which should run thru deployment process during this execution. Input file should be in below format. Typically this is just the output from the `build-ksqldb-query.sh` script.
 `/path-to-source-sql-file/sample-sql.sql`
 
 > Remember the contents inside the input file should be of `.sql` extension only and is case sensitive.
 
 #### Step 03: Execute the script
 Execute the script by running the command  
-`./deployKsqlQuery.sh dev /path-to-control-file/sample.dat 15 deploy`
+`./deploy-ksql-query.sh dev /path-to-control-file/sample.dat 15 deploy`
 
 > - Here `dev` is the target environment  
 > - `15` is the number of seconds between each deployment, This is required so that system is not overloaded.

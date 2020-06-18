@@ -1,15 +1,15 @@
 #!/bin/bash
 #######################################################################################################
-#  Script Name       : deployKsqlQuery.sh                                                             #
+#  Script Name       : deploy-ksql-query.sh                                                             #
 #  created by        : Siva Nadesan                                                                   #
 #  created date      : 2020-04-20                                                                     #
-#  Syntax            : ./deployKsqlQuery.sh <ENVIRONMENT> <FILE_NAME>                                 #
+#  Syntax            : ./deploy-ksql-query.sh <ENVIRONMENT> <FILE_NAME>                                 #
 #                    : ENVIRONMENT - Target environment name                                          #
 #                    : FILE_NAME - File Name with list of ksqlDB query which needs to be deployed     #
 #                    : DEPLOYMENT_INTERVAL - Interval in seconds between each deployment              #
 #                    : MODE - deploy OR dryrun                                                        #
 #  Config file format: Yaml configuration file                                                        #
-#  Example           : ./deployKsqlQuery.sh dev sample.txt                                            #
+#  Example           : ./deploy-ksql-query.sh dev sample.txt                                            #
 #######################################################################################################
 
 #######################################################################################################

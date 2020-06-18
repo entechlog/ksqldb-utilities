@@ -1,9 +1,9 @@
 #!/bin/bash
 #######################################################################################################
-#  Script Name       : dropKsqlDBObjects.sh                                                           #
+#  Script Name       : drop-ksqldb-objects.sh                                                           #
 #  created by        : Siva Nadesan                                                                   #
 #  created date      : 2020-04-15                                                                     #
-#  Syntax            : ./dropKsqlDBObjects.sh <MODE> <KSQL_URL> <FILE_NAME>                           #
+#  Syntax            : ./drop-ksqldb-objects.sh <MODE> <KSQL_URL> <FILE_NAME>                           #
 #                    : MODE - sed and jq are the valid values                                         #
 #                    : KSQL_URL - KSQL host and port number in host:port format                       #
 #                    : FILE_NAME - Full path of file with list of table\stream to be deleted          #
@@ -11,7 +11,7 @@
 #                    : TABLE_STREAM_NAME - Table OR Stream which you want to delete                   #
 #                    : DELETE_TOPIC_FLAG - Flag(Yes/No) to delete topic                               #
 #                    : TERMINATE_ONLY_FLAG - Flag(Yes/No) to terminate only and not drop objects      #
-#  Example           : ./dropKsqlDBObjects.sh sed localhost:8088 /input/DEMO_DROP_KSQL_OBJECT.txt     #
+#  Example           : ./drop-ksqldb-objects.sh sed localhost:8088 /input/DEMO_DROP_KSQL_OBJECT.txt     #
 #######################################################################################################
 
 #######################################################################################################

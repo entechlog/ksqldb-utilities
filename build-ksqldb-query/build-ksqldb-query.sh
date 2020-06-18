@@ -1,13 +1,13 @@
 #!/bin/bash
 #######################################################################################################
-#  Script Name       : buildKsqlQuery.sh                                                              #
+#  Script Name       : build-ksqldb-query.sh                                                              #
 #  created by        : Siva Nadesan                                                                   #
 #  created date      : 2020-04-20                                                                     #
-#  Syntax            : ./buildKsqlQuery.sh <ENVIRONMENT> <FILE_NAME>                                  #
+#  Syntax            : ./build-ksqldb-query.sh <ENVIRONMENT> <FILE_NAME>                                  #
 #                    : ENVIRONMENT - Target environment name                                          #
 #                    : FILE_NAME - File Name with ksqlDB query which needs to be updated              #
 #  Config file format: Yaml configuration file                                                        #
-#  Example           : ./buildKsqlQuery.sh dev sample.txt                                             #
+#  Example           : ./build-ksqldb-query.sh dev sample.txt                                             #
 #######################################################################################################
 
 #######################################################################################################
