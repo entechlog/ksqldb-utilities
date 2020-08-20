@@ -19,6 +19,12 @@
       - [Step 02: Prepare input file](#step-02-prepare-input-file-1)
       - [Step 03: Execute the script](#step-03-execute-the-script-1)
       - [Step 04: Validating the results](#step-04-validating-the-results-1)
+  - [Clean schema registry](#clean-schema-registry)
+    - [Overview](#overview-3)
+    - [How to execute this script](#how-to-execute-this-script-3)
+      - [Step 01: Prepare input file](#step-01-prepare-input-file-1)
+      - [Step 02: Execute the script](#step-02-execute-the-script-1)
+      - [Step 03: Validating the results](#step-03-validating-the-results-1)
 
 # ksqlDB-utilities overview
 This repository has some utilities created for ksqlDB.
@@ -122,3 +128,39 @@ Execute the script by running the command
 Script execution will generate a html report in `reports` sub directory of this script. This script will have information about the execution output.
 
 ![image info](./build-ksqldb-query/demo/deploy-ksql-query.jpg)
+
+## Clean schema registry
+  
+### Overview
+This python module is used to do `permanent` delete on schemas from schema registry which soft deleted.
+
+### How to execute this script
+
+#### Step 01: Prepare input file
+Prepare input yaml file, Input file should be of the format  
+```yaml
+dev:
+  host_name: http://entechlog-vm-01:8081
+  basic_auth_user: user
+  basic_auth_password: password
+test:
+  host_name: http://192.168.1.11:8081
+  basic_auth_user: 
+  basic_auth_password: 
+```
+
+#### Step 02: Execute the script
+- Build the docker image using 
+`docker build --tag entechlog/clean-schema-registry .`
+
+- Build the docker image using
+`docker run -it --rm  -e --config_file=/usr/src/clean-schema-registry.yml -e environment=dev -e mode=dryrun entechlog/clean-schema-registry`
+
+> Script supports two exection modes
+> dryrun  : No deletes just report the list of schema which is eligible for deletion
+> realrun : Deletes the schemas by issuing DELETE with `permanent=true`
+
+#### Step 03: Validating the results
+Script execution will generate a table in sysout with the list of schemas which was deleted
+
+![image info](./clean-schema-registry/demo/tabulate-report.jpg)
