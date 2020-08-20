@@ -9,6 +9,8 @@ import yaml
 import requests
 import tempfile
 from requests.exceptions import HTTPError
+from requests.auth import HTTPBasicAuth
+from tabulate import tabulate
 
 def main():
     # Display the program start time
@@ -42,7 +44,7 @@ def main():
     print("Run Mode                     : " + mode)
 
 def get_config():
-    print("Executing step               : get_config()")
+    print("Executing step               : get_config")
     global host_name
     global basic_auth_user
     global basic_auth_password
@@ -73,12 +75,12 @@ def get_schemas():
     global all_schemas
     global active_schemas
 
-    print("Executing step               : get_schemas()")
+    print("Executing step               : get_schemas")
     rest_url = host_name + "/subjects?deleted=true"
     print("Get all schemas              : " + rest_url)
 
     try:
-        response = requests.get(rest_url)
+        response = requests.get(rest_url, verify=False, auth=HTTPBasicAuth(basic_auth_user, basic_auth_password))
         # If the response was successful, no Exception will be raised
         response.raise_for_status()
     except HTTPError as http_err:
@@ -95,7 +97,7 @@ def get_schemas():
     print("Get deleted schemas          : " + rest_url)
 
     try:
-        response = requests.get(rest_url)
+        response = requests.get(rest_url, verify=False, auth=HTTPBasicAuth(basic_auth_user, basic_auth_password))
         # If the response was successful, no Exception will be raised
         response.raise_for_status()
     except HTTPError as http_err:
@@ -112,24 +114,23 @@ def compare_schemas():
 
     global to_be_deleted_schemas
 
-    print("Executing step               : compare_schemas()")
+    print("Executing step               : compare_schemas")
     to_be_deleted_schemas = list(set(all_schemas) - set(active_schemas))
     print("to_be_deleted_schemas        : " + str(to_be_deleted_schemas))
+    print("to_be_deleted_schemas count  : " + str(len(to_be_deleted_schemas)))
 
 def delete_schemas():
 
-    print("Executing step               : delete_schemas()")
+    print("Executing step               : delete_schemas")
     
     for schema in to_be_deleted_schemas:
         rest_url = host_name + "/subjects/" + schema + "/?permanent=true"
         data = {}
-        headers = {'content-type': 'application/json', 'Authorization': str(basic_auth_user)+str(basic_auth_password)}
-        #auth = "auth=('" + str(basic_auth_user) + "', '" + str(basic_auth_password) + "')"
-        #print(auth)
+        headers = {'content-type': 'application/json'}
     
         # Make a REST API call to put the connector property
         try:
-            response = requests.delete(rest_url, headers=headers)
+            response = requests.delete(rest_url, headers=headers, verify=False, auth=HTTPBasicAuth(basic_auth_user, basic_auth_password))
             # If the response was successful, no Exception will be raised
             response.raise_for_status()
         except HTTPError as http_err:
@@ -139,6 +140,12 @@ def delete_schemas():
         else:
             print("deleted_schema               : " + schema)
 
+def tabulate_report():
+    global deleted_schemas_report
+    print("Executing step               : tabulate_report")
+    deleted_schemas_report = tabulate([to_be_deleted_schemas], tablefmt='grid', headers=['Schema Name'])
+    print(deleted_schemas_report)
+
 if __name__ == "__main__":
     main()
     get_config()
@@ -146,4 +153,5 @@ if __name__ == "__main__":
     compare_schemas()
     if mode == 'realrun':
         delete_schemas()
+    tabulate_report()
     sys.exit()
