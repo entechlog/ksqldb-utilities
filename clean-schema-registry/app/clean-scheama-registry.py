@@ -44,7 +44,9 @@ def main():
     print("Run Mode                     : " + mode)
 
 def get_config():
+    
     print("Executing step               : get_config")
+    
     global host_name
     global basic_auth_user
     global basic_auth_password
@@ -64,18 +66,13 @@ def get_config():
         print("basic_auth_user              : " + str(basic_auth_user))
         print("basic_auth_password          : " + str(basic_auth_password))
 
-        #for config_key, config_value in config_documents.items():
-        #    if config_key == environment:
-        #        print(config_value)
-        #        parsed_config = yaml.dump(config_value, sort_keys=False)
-        #        print(parsed_config)
-
 def get_schemas():
+
+    print("Executing step               : get_schemas")
 
     global all_schemas
     global active_schemas
 
-    print("Executing step               : get_schemas")
     rest_url = host_name + "/subjects?deleted=true"
     print("Get all schemas              : " + rest_url)
 
@@ -91,7 +88,7 @@ def get_schemas():
         # Uncomment only to debug
         response_json = json.loads(response.text)
         all_schemas = response_json
-        print("all_schemas                  : " + str(all_schemas))
+        #print("all_schemas                  : " + str(all_schemas))
 
     rest_url = host_name + "/subjects"
     print("Get deleted schemas          : " + rest_url)
@@ -108,16 +105,19 @@ def get_schemas():
         # Uncomment only to debug
         response_json = json.loads(response.text)
         active_schemas = response_json
-        print("active_schemas               : " + str(active_schemas))
+        #print("active_schemas               : " + str(active_schemas))
 
 def compare_schemas():
 
+    print("Executing step               : compare_schemas")
+
     global to_be_deleted_schemas
 
-    print("Executing step               : compare_schemas")
     to_be_deleted_schemas = list(set(all_schemas) - set(active_schemas))
-    print("to_be_deleted_schemas        : " + str(to_be_deleted_schemas))
-    print("to_be_deleted_schemas count  : " + str(len(to_be_deleted_schemas)))
+    if mode == 'dryrun':
+        for schema in to_be_deleted_schemas:
+            print("to_be_deleted_schemas        : " + schema)
+    #print("to_be_deleted_schemas        : " + str(to_be_deleted_schemas))
 
 def delete_schemas():
 
@@ -141,10 +141,16 @@ def delete_schemas():
             print("deleted_schema               : " + schema)
 
 def tabulate_report():
+
+    #print("Executing step               : tabulate_report")
+
     global deleted_schemas_report
-    print("Executing step               : tabulate_report")
-    deleted_schemas_report = tabulate([to_be_deleted_schemas], tablefmt='grid', headers=['Schema Name'])
-    print(deleted_schemas_report)
+
+    deleted_schemas_report = tabulate([to_be_deleted_schemas], tablefmt='pretty', headers=['Schema Name'])
+    #print(deleted_schemas_report)
+    
+    print("active_schemas count         : " + str(len(active_schemas)))
+    print("to_be_deleted_schemas count  : " + str(len(to_be_deleted_schemas)))
 
 if __name__ == "__main__":
     main()
